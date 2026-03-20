@@ -1,7 +1,25 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Start {
     private static final String DB_URL = "jdbc:sqlite:MM2.db";
+    public static Connection connect() throws SQLException {
+        Connection conn = DriverManager.getConnection(DB_URL);
+
+        // In SQLite, foreign key checks are off unless enabled
+        try (Statement stmt = conn.createStatement()) {
+            //PRAGMA command is sqlite specific due to its default setting
+            stmt.execute("PRAGMA foreign_keys = ON");
+            /**
+             * PRAGMA is used for changing sqlite settings or getting some meta data
+             * such as PRAGMA table_info(students)
+             * this will
+             */
+        }
+
+        return conn;}
     public static void createTables() throws SQLException {
         String sqlCategory = """
             CREATE TABLE IF NOT EXISTS Category (
@@ -38,6 +56,15 @@ public class Start {
                 FOREIGN KEY (dMedName) REFERENCES Medicine(medName)
             );
             """;
+        try (Connection conn = connect(); //instead of passing it we call it here
+             //and this means the connection object opens connection and closes it
+//             when the block is terminates it's execution
+             Statement stmt = conn.createStatement()) {
+            stmt.execute(sqlCategory);
+            stmt.execute(sqlMedicine);
+            stmt.execute(sqlCurrent);
+            stmt.execute(sqlDesired);
+        }
     }
 
     }
