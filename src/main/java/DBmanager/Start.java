@@ -24,7 +24,7 @@ public class Start {
         String sqlCategory = """
                 CREATE TABLE IF NOT EXISTS Category (
                     categoryId INTEGER PRIMARY KEY AUTOINCREMENT,
-                    categoryName TEXT NOT NULL UNIQUE,
+                    categoryName TEXT NOT NULL UNIQUE
                 );
                 """;
         String sqlMedicine = """
