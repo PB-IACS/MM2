@@ -66,5 +66,8 @@ public class Start {
             stmt.execute(sqlDesired);
         }
     }
+    public static void main(String[] args) throws SQLException {
+        createTables();
+    }
 
 }
